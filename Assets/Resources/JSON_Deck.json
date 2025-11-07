@@ -3,42 +3,42 @@
         {
             "type": "letter",
             "loc": {
-                "x": -1.05,
-                "y": 1.42,
+                "x": -1.0,
+                "y": 1.4,
                 "z": 0.0
             },
             "flip": false,
-            "scale": 1.25
+            "scale": 2.0
         },
         {
             "type": "suit",
             "loc": {
-                "x": -1.05,
-                "y": 1.03,
+                "x": -1.0,
+                "y": 0.8,
                 "z": 0.0
             },
             "flip": false,
-            "scale": 0.4
+            "scale": 0.75
         },
         {
             "type": "letter",
             "loc": {
-                "x": 1.05,
-                "y": -1.42,
+                "x": 1.0,
+                "y": -1.4,
                 "z": 0.0
             },
             "flip": true,
-            "scale": 1.25
+            "scale": 2
         },
         {
             "type": "suit",
             "loc": {
-                "x": 1.05,
-                "y": -1.03,
+                "x": 1.0,
+                "y": -0.8,
                 "z": 0.0
             },
             "flip": true,
-            "scale": 0.4
+            "scale": 0.75
         }
     ],
     "cards": [
@@ -65,8 +65,8 @@
                 {
                     "type": "pip",
                     "loc": {
-                        "x": 0.0,
-                        "y": 1.1,
+                        "x": -0.5,
+                        "y": 0.0,
                         "z": 0.0
                     },
                     "flip": false,
@@ -75,8 +75,8 @@
                 {
                     "type": "pip",
                     "loc": {
-                        "x": 0.0,
-                        "y": -1.1,
+                        "x": 0.5,
+                        "y": 0.0,
                         "z": 0.0
                     },
                     "flip": true,
@@ -91,8 +91,8 @@
                 {
                     "type": "pip",
                     "loc": {
-                        "x": 0.0,
-                        "y": 1.1,
+                        "x": 0.5,
+                        "y": -0.75,
                         "z": 0.0
                     },
                     "flip": false,
@@ -102,7 +102,7 @@
                     "type": "pip",
                     "loc": {
                         "x": 0.0,
-                        "y": 0.0,
+                        "y": 0.5,
                         "z": 0.0
                     },
                     "flip": false,
@@ -111,8 +111,8 @@
                 {
                     "type": "pip",
                     "loc": {
-                        "x": 0.0,
-                        "y": -1.1,
+                        "x": -0.5,
+                        "y": -0.75,
                         "z": 0.0
                     },
                     "flip": true,
@@ -376,7 +376,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -386,7 +386,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -396,7 +396,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -406,7 +406,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -416,7 +416,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -426,7 +426,7 @@
                         "z": 0.0
                     },
                     "flip": true,
-                    "scale": 1.0
+                    "scale": 0.80
                 },
                 {
                     "type": "pip",
@@ -436,7 +436,7 @@
                         "z": 0.0
                     },
                     "flip": true,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -446,7 +446,7 @@
                         "z": 0.0
                     },
                     "flip": true,
-                    "scale": 1.0
+                    "scale": 0.8
                 }
             ]
         },
@@ -462,7 +462,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -472,7 +472,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -482,7 +482,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -492,7 +492,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -502,7 +502,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -512,7 +512,7 @@
                         "z": 0.0
                     },
                     "flip": true,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -522,7 +522,7 @@
                         "z": 0.0
                     },
                     "flip": true,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -532,7 +532,7 @@
                         "z": 0.0
                     },
                     "flip": true,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -542,7 +542,7 @@
                         "z": 0.0
                     },
                     "flip": true,
-                    "scale": 1.0
+                    "scale": 0.8
                 }
             ]
         },
@@ -558,7 +558,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -568,7 +568,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -578,7 +578,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -588,7 +588,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -598,7 +598,7 @@
                         "z": 0.0
                     },
                     "flip": false,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -608,7 +608,7 @@
                         "z": 0.0
                     },
                     "flip": true,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -618,7 +618,7 @@
                         "z": 0.0
                     },
                     "flip": true,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -628,7 +628,7 @@
                         "z": 0.0
                     },
                     "flip": true,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -638,7 +638,7 @@
                         "z": 0.0
                     },
                     "flip": true,
-                    "scale": 1.0
+                    "scale": 0.8
                 },
                 {
                     "type": "pip",
@@ -648,7 +648,7 @@
                         "z": 0.0
                     },
                     "flip": true,
-                    "scale": 1.0
+                    "scale": 0.8
                 }
             ]
         },
