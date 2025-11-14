@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -53,6 +53,15 @@ TagManager:
   - name: Row3
     uniqueID: 2400228343
     locked: 0
+  - name: Row4
+    uniqueID: 4222936653
+    locked: 0
+  - name: Row5
+    uniqueID: 4231315995
+    locked: 0
+  - name: Row6
+    uniqueID: 2014808377
+    locked: 0
   - name: Discard
     uniqueID: 601687799
     locked: 0
@@ -62,3 +71,5 @@ TagManager:
   - name: Target
     uniqueID: 1004420391
     locked: 0
+  m_RenderingLayers:
+  - Default
