@@ -284,13 +284,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a58377410ab344f308b739cd13d865a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d6515b84499b614883477d74bb27271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawPile: []
-  discardPile: []
-  mine: []
-  target: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

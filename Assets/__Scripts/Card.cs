@@ -264,10 +264,16 @@ public class Card : MonoBehaviour
     public bool AdjacentTo(Card otherCard, bool wrap = true)
     {
         // If either card is face-down, it’s not a valid match.
-        if (!faceUp || !otherCard.faceUp) return (false);
+        if (!faceUp || !otherCard.faceUp) {
+            return (false); }
 
         // If the ranks are 1 apart, they are adjacent
-        if (Mathf.Abs(rank + otherCard.rank) == 13) return (true);
+        if ((rank + otherCard.rank) == 13) { 
+            return (true);   }
+
+         if (rank == 13) {
+            return (true);
+         }
 
         // if (wrap)
         // {  // If wrap == true, Ace and King are treated as adjacent
@@ -278,5 +284,19 @@ public class Card : MonoBehaviour
 
         return (false);  // Otherwise, return false
     }
+
+    public void SetSelected(bool selected)
+{
+    PopulateSpriteRenderers();
+
+    foreach (SpriteRenderer sr in spriteRenderers)
+    {
+        if (sr.gameObject == this.gameObject) 
+        {
+            // Add glow
+            sr.color = selected ? Color.yellow : Color.white;
+        }
+    }
+}
 
 }

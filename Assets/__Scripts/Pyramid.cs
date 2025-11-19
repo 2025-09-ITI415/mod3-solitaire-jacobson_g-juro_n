@@ -5,9 +5,14 @@ using UnityEngine.SceneManagement;   // We’ll need this line later in the chap
 
 [RequireComponent(typeof(Deck))]                                              // a
 [RequireComponent(typeof(JsonParseLayout))]
-public class Prospector : MonoBehaviour
+
+
+public class Prospector : MonoBehaviour //This will be the pyramid version
 {
     private static Prospector S; // A private Singleton for Prospector
+
+    [Header("Pyramid Selection")]
+    static private CardProspector firstCard = null;
 
     [Header("Dynamic")]
     public List<CardProspector> drawPile;
@@ -134,6 +139,10 @@ public class Prospector : MonoBehaviour
     /// <param name="cp">The CardProspector to be moved</param>
     void MoveToDiscard(CardProspector cp)
     {
+        // if (cp == target) {
+        //     target = null; //clears target if second card clicked
+        // }
+
         // Set the state of the card to discard
         cp.state = eCardState.discard;
         discardPile.Add(cp);  // Add it to the discardPile List<>
@@ -232,45 +241,192 @@ public class Prospector : MonoBehaviour
     /// Handler for any time a card in the game is clicked
     /// </summary>
     /// <param name="cp">The CardProspector that was clicked</param>
-    static public void CARD_CLICKED(CardProspector cp)
-    {
+    static public void CARD_CLICKED(CardProspector cp) {
+    if (cp.state == eCardState.mine && !cp.faceUp) return;
 
-        public CardProspector firstCard = null;
-        // The reaction is determined by the state of the clicked card
-        switch (cp.state)
-        {
-            case eCardState.target:
-             if (S.selectedCard != null) {
-                    if (selectedCard == 13)
-                        return (true); 
-                    else S.selectedCard = firstCard; }
-                // Clicking the target card does nothing
-                break;
-            case eCardState.drawpile:                
-                // Clicking *any* card in the drawPile will draw the next card
-                // Call two methods on the Prospector Singleton S
-                S.MoveToTarget(S.Draw());  // Draw a new target card
-                S.UpdateDrawPile();          // Restack the drawPile
-                break;
-            case eCardState.mine:
-                // Clicking a card in the mine will check if it’s a valid play
-                bool validMatch = true;  // Initially assume that it’s valid 
-
-                // If the card is face-down, it’s not valid
-                if (!cp.faceUp) validMatch = false;
-
-                // If it’s not an adjacent rank, it’s not valid
-                if (!cp.AdjacentTo(S.target)) validMatch = false;            // b
-
-                if (validMatch)
-                {        // If it’s a valid card
-                    S.mine.Remove(cp);   // Remove it from the tableau List
-                    S.MoveToTarget(cp);  // Make it the target card
-
-                    S.SetMineFaceUps();  // Be sure to add this line!!
-                }
-                break;
-        }
+    // Draw pile
+    if (cp.state == eCardState.drawpile) {
+        S.MoveToTarget(S.Draw());
+        S.UpdateDrawPile();
+        return;
     }
 
+    // Handle Kings immediately
+    if ((cp.state == eCardState.mine || cp.state == eCardState.target) && cp.rank == 13) {
+        if (cp.state == eCardState.mine) S.mine.Remove(cp);
+        S.MoveToDiscard(cp);
+        S.SetMineFaceUps();
+        firstCard = null;
+        return;
+    }
+
+    // If no card selected yet, select this one
+    if (firstCard == null) {
+        firstCard = cp;
+        cp.SetSelected(true);
+        return;
+    }
+
+    // If first card selected, check if the sum is 13
+    if (firstCard != cp) {
+        if (firstCard.rank + cp.rank == 13) {
+            if (firstCard.state == eCardState.mine) S.mine.Remove(firstCard);
+            if (cp.state == eCardState.mine) S.mine.Remove(cp);
+
+            S.MoveToDiscard(firstCard);
+            S.MoveToDiscard(cp);
+
+            firstCard.SetSelected(false);
+            firstCard = null;
+            S.SetMineFaceUps();
+        } else {
+            // Not a valid sum, reset selection
+            firstCard.SetSelected(false);
+            firstCard = null;
+        }
+    }
 }
+}
+        // {
+        //     if (cp.state == eCardState.target || cp.state == eCardState.mine) { //handle kings in target and mine state
+        //         if (cp.rank == 13) {
+        //             if (cp.state == eCardState.mine) S.mine.Remove(cp);
+        //             S.MoveToDiscard(cp);
+        //             if (cp.state == eCardState.mine) S.SetMineFaceUps();
+        //             return;
+        //         }
+        //         return;
+        //     }
+            
+
+        //     if (firstCard == null) {
+        //         firstCard = cp;
+        //         cp.SetSelected(true);
+        //         return;
+        //     }
+
+        //     if (firstCard != cp) {
+        //         if (firstCard.rank + cp.rank == 13) {
+        //             if (firstCard.state == eCardState.mine) S.mine.Remove(firstCard);
+        //             if (cp.state == eCardState.mine) S.mine.Remove(cp);
+                  
+        //             S.MoveToDiscard(firstCard);
+        //             S.MoveToDiscard(cp);
+                        
+        //             firstCard.SetSelected(false); // remove highlight
+        //             firstCard = null;
+        //             S.SetMineFaceUps();
+        //         }
+        //         else {
+        //             firstCard.SetSelected(false);
+        //             firstCard = null;
+        //         }
+        //     }
+        
+
+
+
+            // case eCardState.target:
+            // if (cp.rank == 13) {
+            //     S.MoveToDiscard(cp);
+            //     S.SetMineFaceUps();
+            //     firstCard = null;
+            //     return;
+            // }
+            //     if (firstCard == null) {
+            //         firstCard = cp;
+            //         cp.SetSelected(true); //highlight
+            //         return; 
+            //     }
+
+            //     if (firstCard != cp) {
+            //         if (firstCard.rank + cp.rank == 13) {
+            //             if (firstCard.state == eCardState.mine) S.mine.Remove(firstCard);
+            //             if (cp.state == eCardState.mine) S.mine.Remove(cp);
+                       
+            //             S.MoveToDiscard(firstCard);
+            //             S.MoveToDiscard(cp);
+                        
+            //             firstCard.SetSelected(false); // remove highlight
+            //             firstCard = null;
+            //             S.SetMineFaceUps();
+            //         }
+            //         else {
+            //             firstCard.SetSelected(false);
+            //             firstCard = null;
+            //         }
+            //     }
+            //     break;
+                
+            //  if (S.selectedCard != null) {
+            //         if (S.selectedCard.rank == 13) {
+            //             return (true); 
+            //                 }
+            //         else { 
+            //             S.selectedCard = firstCard; 
+            //         }
+                //    break;
+
+                // Clicking the target card does nothing
+            // case eCardState.drawpile:
+            //     // Clicking *any* card in the drawPile will draw the next card
+            //     // Call two methods on the Prospector Singleton S
+            //     S.MoveToTarget(S.Draw());  // Draw a new target card
+            //     S.UpdateDrawPile();          // Restack the drawPile
+            //     break;
+
+//             case eCardState.mine:
+//                 // Clicking a card in the mine will check if it’s a valid play
+//                 // bool validMatch = true;  // Initially assume that it’s valid 
+//                 // If the card is face-down, it’s not valid
+                
+//                 if (!cp.faceUp) return;
+
+//                 if (cp.rank == 13) {    //If card is a king
+//                     if (cp.state == eCardState.mine) S.mine.Remove(cp);
+//                     S.MoveToDiscard(cp);
+//                     S.SetMineFaceUps();
+//                     return;
+//                 }
+
+//                 if (firstCard == null) { //first card picked
+//                     firstCard = cp;
+//                     cp.SetSelected(true); //highlight card
+//                     return;
+//                 }
+
+//                 if (firstCard != cp) { //pick second card
+//                     if (firstCard.rank + cp.rank == 13) { //check sum
+//                     //remove cards from mine
+//                         if (firstCard.state == eCardState.mine) S.mine.Remove(firstCard);
+//                         if (cp.state == eCardState.mine) S.mine.Remove(cp);
+//                     //move cards to discard
+//                         S.MoveToDiscard(firstCard);
+//                         S.MoveToDiscard(cp);
+//                         firstCard.SetSelected(false); // remove highlight
+//                         firstCard = null;
+//                         S.SetMineFaceUps();
+//                     }
+//                     else {
+//                         firstCard.SetSelected(false);
+//                         firstCard = null; //if sum is not 13, card selection resets
+//                         return;
+//                     }
+//                 }
+//                 return;
+//         }
+//     }
+// }
+
+
+                // // If it’s not an adjacent rank, it’s not valid
+                // if (!cp.AdjacentTo(S.target)) validMatch = false;            // b
+
+                // if (validMatch)
+                // {        // If it’s a valid card
+                //     S.mine.Remove(cp);   // Remove it from the tableau List
+                //     S.MoveToTarget(cp);  // Make it the target card
+
+                //     S.SetMineFaceUps();  // Be sure to add this line!!
+                // }
+                // break;
