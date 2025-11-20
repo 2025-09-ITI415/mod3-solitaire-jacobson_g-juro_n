@@ -10,8 +10,9 @@ public class JsonLayout
 {
     public Vector2 multiplier;
     public List<JsonLayoutSlot> slots;
-    public JsonLayoutPile drawPile, discardPile;
+    public JsonLayoutPile drawPile, discardPile, matchPile;  
 }
+
 
 /// <summary>
 /// Stores information for each slot in the layout.

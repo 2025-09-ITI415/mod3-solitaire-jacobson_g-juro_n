@@ -237,9 +237,15 @@
         "xStagger": 0.15
     },
     "discardPile": {
-        "x": -5,
+        "x": 3,
         "y": -4,
         "layer": "Discard",
         "xStagger": 0
-    }
+    },
+    "matchPile": {
+    	"x": -5,
+    	"y": -4,
+    	"layer": "Discard",
+    	"xStagger": 0
+	}
 }
