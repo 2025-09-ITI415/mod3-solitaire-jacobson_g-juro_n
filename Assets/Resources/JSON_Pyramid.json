@@ -234,7 +234,7 @@
         "x": 5,
         "y": -4,
         "layer": "Draw",
-        "xStagger": 0.15
+        "xStagger": 0
     },
     "discardPile": {
         "x": 3,

@@ -83,10 +83,30 @@ public class Prospector : MonoBehaviour //This will be the pyramid version
     /// <returns>The top card of drawPile</returns>
     CardProspector Draw()
     {
-        CardProspector cp = drawPile[0]; // Pull the 0th CardProspector
-        drawPile.RemoveAt(0);            // Then remove it from drawPile
-        return (cp);                      // And return it
+        // If the draw pile is empty, try to recycle from discard + target
+        if (drawPile.Count == 0)
+        {
+            // Only recycle if there is something to recycle
+            if (discardPile.Count > 0 || target != null)
+            {
+                RecycleDiscardToDraw();
+            }
+            else
+            {
+                // Nothing left to draw
+                return null;
+            }
+        }
+
+        // If it's STILL empty after recycle, just bail
+        if (drawPile.Count == 0) return null;
+
+        // Now we definitely have at least one card to draw
+        CardProspector cp = drawPile[0];
+        drawPile.RemoveAt(0);
+        return cp;
     }
+
 
     /// <summary>
     /// Positions the initial tableau of cards, a.k.a. the "mine"
@@ -169,8 +189,10 @@ public class Prospector : MonoBehaviour //This will be the pyramid version
     }
     void MoveToMatchPile(CardProspector cp)
     {
+        // Was this card the current target?
         bool wasTarget = (cp == target);
 
+        // Remove from other lists if present
         mine.Remove(cp);
         discardPile.Remove(cp);
         if (wasTarget)
@@ -178,10 +200,12 @@ public class Prospector : MonoBehaviour //This will be the pyramid version
             target = null;
         }
 
-        cp.state = eCardState.discard;  
+        // Mark as out of play (you could make a dedicated "matched" state if you want)
+        cp.state = eCardState.discard;
         matchPile.Add(cp);
         cp.transform.SetParent(layoutAnchor);
 
+        // Position using the JSON matchPile values
         Vector3 pos = new Vector3(
             jsonLayout.multiplier.x * jsonLayout.matchPile.x +
                 (jsonLayout.matchPile.xStagger * matchPile.Count),
@@ -194,13 +218,12 @@ public class Prospector : MonoBehaviour //This will be the pyramid version
         cp.SetSpriteSortingLayer(jsonLayout.matchPile.layer);
         cp.SetSortingOrder(1000 + matchPile.Count);
 
-        // 🔹 If we just removed the target, promote the top discard card to new target
+        // 🔹 If we just removed the target, promote the TOP discard card to be the new target
         if (wasTarget && discardPile.Count > 0)
         {
             CardProspector newTarget = discardPile[discardPile.Count - 1];
             discardPile.RemoveAt(discardPile.Count - 1);
 
-            // Make this card the new target
             newTarget.transform.SetParent(layoutAnchor);
             newTarget.SetLocalPos(new Vector3(
                 jsonLayout.multiplier.x * jsonLayout.discardPile.x,
@@ -216,6 +239,7 @@ public class Prospector : MonoBehaviour //This will be the pyramid version
             target = newTarget;
         }
     }
+
 
 
 
@@ -298,8 +322,10 @@ public class Prospector : MonoBehaviour //This will be the pyramid version
 
     void RecycleDiscardToDraw()
     {
+        // Build a new draw pile from discard + current target
         List<CardProspector> newDraw = new List<CardProspector>();
 
+        // Add all discard cards from top to bottom
         for (int i = discardPile.Count - 1; i >= 0; i--)
         {
             CardProspector dcp = discardPile[i];
@@ -310,7 +336,7 @@ public class Prospector : MonoBehaviour //This will be the pyramid version
             newDraw.Add(dcp);
         }
 
-        // Include the current target in the recycle
+        // Also include the current target, if there is one
         if (target != null)
         {
             target.state = eCardState.drawpile;
@@ -320,22 +346,25 @@ public class Prospector : MonoBehaviour //This will be the pyramid version
         }
 
         discardPile.Clear();
+
+        // Replace draw pile with recycled cards
         drawPile = newDraw;
 
+        // Clear any selection
         if (firstCard != null)
         {
             firstCard.SetSelected(false);
             firstCard = null;
         }
 
+        // Lay out the recycled draw pile in the stock position
         UpdateDrawPile();
 
-        if (drawPile.Count > 0)
-        {
-            MoveToTarget(Draw());
-            UpdateDrawPile();
-        }
+        Debug.Log($"Recycled {newDraw.Count} cards from discard/target back into draw pile.");
     }
+
+
+
 
 
 
@@ -410,15 +439,20 @@ public class Prospector : MonoBehaviour //This will be the pyramid version
         if (cp.state == eCardState.mine && !S.MineCardIsUncovered(cp)) return;
         if (cp.state == eCardState.mine && !cp.faceUp) return;
 
+        // Draw pile
         if (cp.state == eCardState.drawpile)
         {
-            if (S.drawPile.Count > 0)
+            CardProspector newTarget = S.Draw();
+
+            if (newTarget != null)
             {
-                S.MoveToTarget(S.Draw());
+                S.MoveToTarget(newTarget);
                 S.UpdateDrawPile();
             }
+
             return;
         }
+
 
         if ((cp.state == eCardState.mine || cp.state == eCardState.target) && cp.rank == 13)
         {
